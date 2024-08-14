@@ -1,12 +1,10 @@
-import React from 'react';
-import { Select } from 'antd';
-import { useSelect } from '../hooks/useSelect';
+import { Select } from "antd";
+import { useSelect } from "../hooks/useSelect";
 
 const sortOptions = [
-  { value: 'uploadTime', label: '上傳時間' },
-  { value: 'shootTime', label: '拍攝時間' },
+  { value: "uploadTime", label: "上傳時間" },
+  { value: "shootTime", label: "拍攝時間" },
 ];
-
 
 const Sort = () => {
   const { handleChange } = useSelect();

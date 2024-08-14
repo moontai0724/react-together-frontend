@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { Pagination, Modal } from 'antd';
-import PhotoItem from './PhotoItem';
-import ReactionButtons from './ReactionButtons';
-import { fetchWithAuth } from '../services/api';
+import { useState, useEffect } from "react";
+import { Pagination, Modal } from "antd";
+import PhotoItem from "./PhotoItem";
+import ReactionButtons from "./ReactionButtons";
+import { fetchWithAuth } from "../services/api";
 
 const Gallery = () => {
   const [photos, setPhotos] = useState([]);
@@ -16,34 +16,34 @@ const Gallery = () => {
     fetchPhotosData(currentPage);
   }, [currentPage]);
 
-  const fetchPhotosData = async (page) => {
+  const fetchPhotosData = async page => {
     try {
       const data = await fetchWithAuth(`/photos/?page=${page}&limit=${photosPerPage}`);
       const { total, data: photosData } = data;
 
       const updatedPhotos = photosData.map(photo => ({
         id: photo.id,
-        src: photo.flickrPhotoSizes.find(size => size.label === 'Medium').source,
-        fullSizeSrc: photo.flickrPhotoSizes.find(size => size.label === 'Original').source,
+        src: photo.flickrPhotoSizes.find(size => size.label === "Medium").source,
+        fullSizeSrc: photo.flickrPhotoSizes.find(size => size.label === "Original").source,
         alt: photo.fileName,
         likes: 0,
         dislikes: 0,
         userLiked: false,
-        userDisliked: false
+        userDisliked: false,
       }));
-      
+
       setPhotos(updatedPhotos);
-      setTotalPhotos(total); 
+      setTotalPhotos(total);
     } catch (error) {
-      console.error('Error fetching photos:', error);
+      console.error("Error fetching photos:", error);
     }
   };
 
-  const handlePageChange = (page) => {
+  const handlePageChange = page => {
     setCurrentPage(page);
   };
 
-  const handleLike = (id) => {
+  const handleLike = id => {
     setPhotos(prevPhotos => {
       const updatedPhotos = prevPhotos.map(photo => {
         if (photo.id === id) {
@@ -52,7 +52,7 @@ const Gallery = () => {
             likes: photo.userLiked ? photo.likes - 1 : photo.likes + 1,
             userLiked: !photo.userLiked,
             dislikes: photo.userDisliked ? photo.dislikes - 1 : photo.dislikes,
-            userDisliked: false
+            userDisliked: false,
           };
         }
         return photo;
@@ -64,7 +64,7 @@ const Gallery = () => {
     });
   };
 
-  const handleDislike = (id) => {
+  const handleDislike = id => {
     setPhotos(prevPhotos => {
       const updatedPhotos = prevPhotos.map(photo => {
         if (photo.id === id) {
@@ -73,7 +73,7 @@ const Gallery = () => {
             dislikes: photo.userDisliked ? photo.dislikes - 1 : photo.dislikes + 1,
             userDisliked: !photo.userDisliked,
             likes: photo.userLiked ? photo.likes - 1 : photo.likes,
-            userLiked: false
+            userLiked: false,
           };
         }
         return photo;
@@ -85,7 +85,7 @@ const Gallery = () => {
     });
   };
 
-  const handleZoom = (photo) => {
+  const handleZoom = photo => {
     setZoomedImage(photo.fullSizeSrc);
     setCurrentPhoto(photo);
   };
@@ -94,9 +94,9 @@ const Gallery = () => {
     <div className="gallery">
       <div className="photo-grid">
         {photos.map(photo => (
-          <PhotoItem 
-            key={photo.id} 
-            photo={photo} 
+          <PhotoItem
+            key={photo.id}
+            photo={photo}
             onLike={handleLike}
             onDislike={handleDislike}
             onZoom={() => handleZoom(photo)}
@@ -110,7 +110,7 @@ const Gallery = () => {
         onChange={handlePageChange}
         showSizeChanger={false}
         showQuickJumper
-        style={{ marginTop: '20px', textAlign: 'center' }}
+        style={{ marginTop: "20px", textAlign: "center" }}
       />
       <Modal
         open={zoomedImage !== null}
@@ -120,11 +120,7 @@ const Gallery = () => {
         }}
         footer={
           currentPhoto ? (
-            <ReactionButtons 
-              photo={currentPhoto} 
-              onLike={handleLike}
-              onDislike={handleDislike}
-            />
+            <ReactionButtons photo={currentPhoto} onLike={handleLike} onDislike={handleDislike} />
           ) : null
         }
         width={800}

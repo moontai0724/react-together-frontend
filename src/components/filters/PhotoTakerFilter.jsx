@@ -1,13 +1,11 @@
-import React from 'react';
-import { Select } from 'antd';
-import { useSelect } from '../../hooks/useSelect';
+import { Select } from "antd";
+import { useSelect } from "../../hooks/useSelect";
 
 const photoTakerOptions = [
-  { value: 'jack', label: 'Jack' },
-  { value: 'lucy', label: 'Lucy' },
-  { value: 'tom', label: 'Tom' },
+  { value: "jack", label: "Jack" },
+  { value: "lucy", label: "Lucy" },
+  { value: "tom", label: "Tom" },
 ];
-
 
 const PhotoTakerFilter = () => {
   const { handleChange, handleSearch } = useSelect();

@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { Layout, Button } from 'antd';
-import LoadingPage from './components/LoadingPage';
-import Photos from './components/Photos';
-import { initKeycloak, logout } from './services/auth';
-import PropTypes from 'prop-types';
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { Layout, Button } from "antd";
+import LoadingPage from "./components/LoadingPage";
+import Photos from "./components/Photos";
+import { initKeycloak, logout } from "./services/auth";
+import PropTypes from "prop-types";
 
 const { Header, Footer } = Layout;
 
@@ -36,7 +36,15 @@ const App = () => {
   return (
     <Router>
       <Layout>
-        <Header style={{ position: 'sticky', display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'white' }}>
+        <Header
+          style={{
+            position: "sticky",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            color: "white",
+          }}
+        >
           <h3>Welcome To React Together</h3>
           {isAuthenticated && (
             <Button href="/logout" type="primary" danger>
@@ -45,22 +53,17 @@ const App = () => {
           )}
         </Header>
         <Routes>
-          <Route 
-            path="/" 
-            element={isAuthenticated ? <Navigate to="/photos" replace /> : <LoadingPage />} 
-          />
-          <Route 
-            path="/photos" 
-            element={isAuthenticated ? <Photos /> : <Navigate to="/" replace />} 
+          <Route
+            path="/"
+            element={isAuthenticated ? <Navigate to="/photos" replace /> : <LoadingPage />}
           />
           <Route
-            path="/logout"
-            element={
-              <LogoutRoute handleLogout={handleLogout} />
-            }
+            path="/photos"
+            element={isAuthenticated ? <Photos /> : <Navigate to="/" replace />}
           />
+          <Route path="/logout" element={<LogoutRoute handleLogout={handleLogout} />} />
         </Routes>
-        <Footer style={{ textAlign: 'center' }}>
+        <Footer style={{ textAlign: "center" }}>
           Ant Design ©{new Date().getFullYear()} Created by Ant UED
         </Footer>
       </Layout>
